@@ -54,3 +54,42 @@ extension Color {
     static let muscleCardio    = Color(red: 1.0,   green: 0.420, blue: 0.208) // energy orange
     static let muscleFullBody  = Color(red: 0.196, green: 0.843, blue: 0.294) // green
 }
+
+// MARK: - ShapeStyle Extensions
+// Allows dot-syntax token access in .foregroundStyle(), .fill(), etc.
+// which expect a generic ShapeStyle rather than Color.
+
+extension ShapeStyle where Self == Color {
+
+    // Energy / Brand
+    static var energyOrange:  Color { .energyOrange }
+    static var energyRed:     Color { .energyRed }
+    static var wellnessTeal:  Color { .wellnessTeal }
+    static var achieveGold:   Color { .achieveGold }
+
+    // Surfaces
+    static var surfacePrimary:   Color { .surfacePrimary }
+    static var surfaceSecondary: Color { .surfaceSecondary }
+    static var surfaceTertiary:  Color { .surfaceTertiary }
+    static var surfaceGlass:     Color { .surfaceGlass }
+
+    // Text
+    static var textPrimary:   Color { .textPrimary }
+    static var textSecondary: Color { .textSecondary }
+    static var textTertiary:  Color { .textTertiary }
+
+    // Semantic
+    static var success: Color { .success }
+    static var warning: Color { .warning }
+    static var error:   Color { .error }
+
+    // Muscle Group
+    static var muscleChest:     Color { .muscleChest }
+    static var muscleBack:      Color { .muscleBack }
+    static var muscleLegs:      Color { .muscleLegs }
+    static var muscleCore:      Color { .muscleCore }
+    static var muscleArms:      Color { .muscleArms }
+    static var muscleShoulders: Color { .muscleShoulders }
+    static var muscleCardio:    Color { .muscleCardio }
+    static var muscleFullBody:  Color { .muscleFullBody }
+}
