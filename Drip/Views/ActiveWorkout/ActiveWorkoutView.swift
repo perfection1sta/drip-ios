@@ -30,10 +30,18 @@ struct ActiveWorkoutView: View {
                     .padding(.bottom, Spacing.xxl)
             }
 
+            // Set timer overlay
+            if vm.showSetTimer, let exercise = vm.currentExercise {
+                SetTimerView(exercise: exercise, setNumber: vm.currentSetIndex + 1)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .zIndex(1)
+            }
+
             // Rest timer overlay
             if vm.sessionState == .resting {
                 RestTimerView()
                     .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .zIndex(2)
             }
 
             if vm.showSetCompletion {
@@ -195,18 +203,33 @@ struct ActiveWorkoutView: View {
             .background(.white.opacity(0.07))
             .clipShape(RoundedRectangle(cornerRadius: Spacing.Radius.xl))
 
-            // Complete Set
-            DripButton("Complete Set", icon: "checkmark") {
-                vm.completeSet()
+            // Start Set → opens timer; Complete Set → logs without timer
+            HStack(spacing: Spacing.sm) {
+                DripButton("Start Set", icon: "timer") {
+                    HapticManager.shared.medium()
+                    withAnimation(.snappy) { vm.showSetTimer = true }
+                }
+
+                Button {
+                    vm.completeSet()
+                } label: {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.white.opacity(0.7))
+                        .frame(width: 52, height: 52)
+                        .background(.white.opacity(0.1))
+                        .clipShape(Circle())
+                }
+                .buttonStyle(ScaleDownButtonStyle())
             }
 
-            // Skip — text link only, no button outline
+            // Skip — text link only
             Button("Skip Set") {
                 vm.skipSet()
                 HapticManager.shared.light()
             }
             .font(.bodySmall)
-            .foregroundStyle(.white.opacity(0.4))
+            .foregroundStyle(.white.opacity(0.35))
         }
     }
 
@@ -278,5 +301,13 @@ struct AnimatedGradientBackground: View {
                 .animation(.linear(duration: 8).repeatForever(autoreverses: true), value: phase)
         }
         .onAppear { phase = 1 }
+    }
+}
+
+private struct ScaleDownButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.92 : 1.0)
+            .animation(.snappy, value: configuration.isPressed)
     }
 }

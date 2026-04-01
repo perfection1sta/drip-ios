@@ -29,6 +29,7 @@ final class ActiveWorkoutViewModel {
     var lastCompletedSetInfo: String = ""
     var newPRExerciseName: String? = nil
     var showPRCelebration: Bool = false
+    var showSetTimer: Bool = false
 
     // Injected
     var timerVM = TimerViewModel()
