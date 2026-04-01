@@ -32,7 +32,7 @@ enum MuscleGroup: String, Codable, CaseIterable, Identifiable {
     var sfSymbol: String {
         switch self {
         case .chest:      return "figure.strengthtraining.traditional"
-        case .back:       return "figure.rowing"
+        case .back:       return "figure.walk"
         case .shoulders:  return "figure.arms.open"
         case .biceps:     return "figure.curling"
         case .triceps:    return "figure.gymnastics"

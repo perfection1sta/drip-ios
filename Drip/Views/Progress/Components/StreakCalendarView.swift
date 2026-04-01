@@ -15,7 +15,7 @@ struct StreakCalendarView: View {
 
                 // Weekday headers
                 LazyVGrid(columns: columns, spacing: 4) {
-                    ForEach(weekdayLabels, id: \.self) { d in
+                    ForEach(Array(weekdayLabels.enumerated()), id: \.offset) { _, d in
                         Text(d)
                             .font(.caption)
                             .foregroundStyle(.textTertiary)

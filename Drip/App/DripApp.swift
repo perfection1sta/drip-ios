@@ -62,10 +62,12 @@ private struct RootView: View {
         // Watch for onboarding completion to transition to main app
         .onChange(of: onboardingVM.currentStep) { _, step in
             if step == .complete {
-                // Brief delay for celebration animation
+                // Brief delay for celebration animation.
+                // Use container.mainContext — @Environment context may be detached after view swap.
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    SwiftDataService.shared.ensureTodayWorkout(context: context)
-                    homeVM.load(context: context)
+                    let ctx = SwiftDataService.shared.container.mainContext
+                    SwiftDataService.shared.ensureTodayWorkout(context: ctx)
+                    homeVM.load(context: ctx)
                     withAnimation(.smooth) {
                         onboardingComplete = true
                     }

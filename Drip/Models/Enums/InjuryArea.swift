@@ -36,7 +36,7 @@ enum InjuryArea: String, Codable, CaseIterable, Identifiable {
         case .neck:       return "person.fill"
         case .hips:       return "figure.stand"
         case .ankles:     return "shoe.fill"
-        case .elbows:     return "arm.variable.and.arm.fill"
+        case .elbows:     return "hand.raised.fill"
         case .upperBack:  return "figure.strengthtraining.traditional"
         }
     }
