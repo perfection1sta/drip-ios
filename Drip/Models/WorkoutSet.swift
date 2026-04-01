@@ -15,10 +15,10 @@ final class WorkoutSet {
     var restTakenSeconds: Int
 
     // MARK: V2 — Timed holds (pilates/yoga) and circuit round tracking
-    var isTimeBased: Bool
+    var isTimeBased: Bool = false
     var targetHoldSeconds: Int?    // target duration for holds
     var completedHoldSeconds: Int? // actual duration held
-    var circuitRound: Int          // which round this set belongs to (1-indexed)
+    var circuitRound: Int = 1
 
     init(setNumber: Int,
          exerciseID: UUID,

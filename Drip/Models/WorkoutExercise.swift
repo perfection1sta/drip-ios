@@ -18,7 +18,7 @@ final class WorkoutExercise {
     var exerciseCategoryRaw: String
     var exerciseEquipment: String
     var exerciseRestSeconds: Int
-    var exerciseWorkoutStyleRaw: String
+    var exerciseWorkoutStyleRaw: String = "setsAndReps"
 
     init(sortOrder: Int, exercise: Exercise, customSets: Int? = nil, customReps: Int? = nil) {
         self.id = UUID()

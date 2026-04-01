@@ -21,8 +21,8 @@ final class Exercise {
     var caloriesPerMinute: Double
 
     // MARK: V2 — Archetype & Style
-    var archetypeRaw: String
-    var workoutStyleRaw: String
+    var archetypeRaw: String = "gymBro"
+    var workoutStyleRaw: String = "setsAndReps"
     var defaultHoldSeconds: Int?   // for timed holds (pilates/yoga)
 
     init(id: UUID = UUID(),

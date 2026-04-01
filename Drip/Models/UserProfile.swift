@@ -18,14 +18,14 @@ final class UserProfile {
     var longestStreakDays: Int
 
     // MARK: V2 — Archetype & Onboarding
-    var archetypeRaw: String
-    var hasCompletedOnboarding: Bool
-    var injuriesRaw: [String]
-    var injuryNotes: String
-    var availableEquipmentRaw: [String]
-    var fitnessGoalsRaw: [String]
-    var preferredWorkoutDaysRaw: [Int]    // 1=Sun ... 7=Sat
-    var aiCoachEnabled: Bool
+    var archetypeRaw: String = "gymBro"
+    var hasCompletedOnboarding: Bool = false
+    var injuriesRaw: [String] = []
+    var injuryNotes: String = ""
+    var availableEquipmentRaw: [String] = []
+    var fitnessGoalsRaw: [String] = []
+    var preferredWorkoutDaysRaw: [Int] = []
+    var aiCoachEnabled: Bool = false
 
     init(name: String = "Athlete") {
         self.id = UUID()

@@ -13,10 +13,10 @@ final class Workout {
     var isCompleted: Bool
 
     // MARK: V2 — Archetype & Style
-    var archetypeRaw: String
-    var workoutStyleRaw: String
-    var isAIGenerated: Bool
-    var circuitRounds: Int           // 1 for setsAndReps, 3-5 for circuits
+    var archetypeRaw: String = "gymBro"
+    var workoutStyleRaw: String = "setsAndReps"
+    var isAIGenerated: Bool = false
+    var circuitRounds: Int = 1
     var aiPromptSummary: String?     // brief summary of AI prompt used (debug/transparency)
 
     @Relationship(deleteRule: .cascade)
