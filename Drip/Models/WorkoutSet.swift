@@ -14,11 +14,20 @@ final class WorkoutSet {
     var completedAt: Date?
     var restTakenSeconds: Int
 
+    // MARK: V2 — Timed holds (pilates/yoga) and circuit round tracking
+    var isTimeBased: Bool
+    var targetHoldSeconds: Int?    // target duration for holds
+    var completedHoldSeconds: Int? // actual duration held
+    var circuitRound: Int          // which round this set belongs to (1-indexed)
+
     init(setNumber: Int,
          exerciseID: UUID,
          exerciseName: String,
          targetReps: Int,
-         weightLbs: Double = 0) {
+         weightLbs: Double = 0,
+         isTimeBased: Bool = false,
+         targetHoldSeconds: Int? = nil,
+         circuitRound: Int = 1) {
         self.id = UUID()
         self.setNumber = setNumber
         self.exerciseID = exerciseID
@@ -29,6 +38,10 @@ final class WorkoutSet {
         self.isCompleted = false
         self.completedAt = nil
         self.restTakenSeconds = 0
+        self.isTimeBased = isTimeBased
+        self.targetHoldSeconds = targetHoldSeconds
+        self.completedHoldSeconds = nil
+        self.circuitRound = circuitRound
     }
 
     var volume: Double { weightLbs * Double(completedReps) }

@@ -330,11 +330,10 @@ def build_cfg(cfg_id, name, is_debug):
     w(f"\t\t\t\tCOPY_PHASE_STRIP = NO;")
     dbg_fmt   = "dwarf" if is_debug else '"dwarf-with-dsym"'
     testable  = "YES" if is_debug else "NO"
-    preproc   = '"DEBUG=1" $(inherited)' if is_debug else "$(inherited)"
+    preproc   = '"DEBUG=1", "$(inherited)"' if is_debug else '"$(inherited)"'
     mtl_dbg   = "INCLUDE_SOURCE" if is_debug else "NO"
     only_arch = "YES" if is_debug else "NO"
-    swift_cond = "DEBUG" if is_debug else ""
-    swift_opt  = "-Onone" if is_debug else '"-Os"'
+    swift_opt  = '"-Onone"' if is_debug else '"-Os"'
     w(f"\t\t\t\tDEBUG_INFORMATION_FORMAT = {dbg_fmt};")
     w(f"\t\t\t\tENABLE_STRICT_OBJC_MSGSEND = YES;")
     w(f"\t\t\t\tENABLE_TESTABILITY = {testable};")
@@ -353,7 +352,8 @@ def build_cfg(cfg_id, name, is_debug):
     w(f"\t\t\t\tMTL_FAST_MATH = YES;")
     w(f"\t\t\t\tONLY_ACTIVE_ARCH = {only_arch};")
     w(f"\t\t\t\tSDKROOT = iphoneos;")
-    w(f"\t\t\t\tSWIFT_ACTIVE_COMPILATION_CONDITIONS = {swift_cond};")
+    if is_debug:
+        w(f"\t\t\t\tSWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;")
     w(f"\t\t\t\tSWIFT_OPTIMIZATION_LEVEL = {swift_opt};")
     w(f"\t\t\t}};")
     w(f"\t\t\tname = {name};")
@@ -371,7 +371,7 @@ def target_cfg(cfg_id, name, is_debug):
     w(f"\t\t\t\tGENERATE_INFOPLIST_FILE = NO;")
     w(f"\t\t\t\tINFOPLIST_FILE = Drip/Resources/Info.plist;")
     w(f"\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 17.0;")
-    w(f"\t\t\t\tLE_SWIFT_VERSION = 5.0;")
+    w(f"\t\t\t\tSWIFT_VERSION = 5.0;")
     w(f"\t\t\t\tMARKETING_VERSION = 1.0;")
     w(f"\t\t\t\tPRODUCT_BUNDLE_IDENTIFIER = com.akshaykailat.drip;")
     w(f"\t\t\t\tPRODUCT_NAME = \"$(TARGET_NAME)\";")

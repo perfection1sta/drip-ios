@@ -20,6 +20,11 @@ final class Exercise {
     var iconName: String
     var caloriesPerMinute: Double
 
+    // MARK: V2 — Archetype & Style
+    var archetypeRaw: String
+    var workoutStyleRaw: String
+    var defaultHoldSeconds: Int?   // for timed holds (pilates/yoga)
+
     init(id: UUID = UUID(),
          name: String,
          description: String,
@@ -33,9 +38,12 @@ final class Exercise {
          defaultSets: Int? = nil,
          defaultReps: Int? = nil,
          defaultDurationSeconds: Int? = nil,
+         defaultHoldSeconds: Int? = nil,
          restDurationSeconds: Int? = nil,
          iconName: String,
-         caloriesPerMinute: Double = 6.0) {
+         caloriesPerMinute: Double = 6.0,
+         archetype: UserArchetype = .gymBro,
+         workoutStyle: WorkoutStyle = .setsAndReps) {
         self.id = id
         self.name = name
         self.exerciseDescription = description
@@ -49,12 +57,15 @@ final class Exercise {
         self.defaultSets = defaultSets ?? difficulty.defaultSets
         self.defaultReps = defaultReps ?? difficulty.defaultReps
         self.defaultDurationSeconds = defaultDurationSeconds
+        self.defaultHoldSeconds = defaultHoldSeconds
         self.restDurationSeconds = restDurationSeconds ?? difficulty.restSeconds
         self.iconName = iconName
         self.caloriesPerMinute = caloriesPerMinute
+        self.archetypeRaw = archetype.rawValue
+        self.workoutStyleRaw = workoutStyle.rawValue
     }
 
-    // MARK: Computed helpers
+    // MARK: Computed
     var primaryMuscles: [MuscleGroup] {
         primaryMusclesRaw.compactMap { MuscleGroup(rawValue: $0) }
     }
@@ -67,5 +78,12 @@ final class Exercise {
     var difficulty: DifficultyLevel {
         DifficultyLevel(rawValue: difficultyRaw) ?? .intermediate
     }
+    var archetype: UserArchetype {
+        UserArchetype(rawValue: archetypeRaw) ?? .gymBro
+    }
+    var workoutStyle: WorkoutStyle {
+        WorkoutStyle(rawValue: workoutStyleRaw) ?? .setsAndReps
+    }
     var isBodyweight: Bool { equipment.lowercased() == "bodyweight" }
+    var isTimeBased: Bool { defaultHoldSeconds != nil || defaultDurationSeconds != nil }
 }

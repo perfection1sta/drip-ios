@@ -27,7 +27,7 @@ struct SetCompletionOverlay: View {
                         let px = p.x + p.vx * t * 100
                         let py = p.y + p.vy * t * 100
                         let alpha = max(0, 1 - t * 1.2)
-                        var circle = Path(ellipseIn: CGRect(x: px - 4, y: py - 4, width: 8, height: 8))
+                        let circle = Path(ellipseIn: CGRect(x: px - 4, y: py - 4, width: 8, height: 8))
                         ctx.fill(circle, with: .color(p.color.opacity(alpha)))
                     }
                 }

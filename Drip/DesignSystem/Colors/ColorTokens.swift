@@ -44,6 +44,11 @@ extension Color {
     static let warning = Color(red: 1.0,   green: 0.624, blue: 0.039) // #FF9F0A
     static let error   = Color(red: 1.0,   green: 0.271, blue: 0.227) // #FF453A
 
+    // MARK: Archetype Accents
+    static let archetypeGymBro    = Color(red: 1.0,   green: 0.420, blue: 0.208) // energyOrange
+    static let archetypeFunctional = Color(red: 0.196, green: 0.898, blue: 0.369) // electric green
+    static let archetypePilates   = Color(red: 0.788, green: 0.576, blue: 0.976) // soft lavender
+
     // MARK: Muscle Group
     static let muscleChest     = Color(red: 1.0,   green: 0.400, blue: 0.400) // coral
     static let muscleBack      = Color(red: 0.259, green: 0.522, blue: 0.957) // blue
@@ -82,6 +87,11 @@ extension ShapeStyle where Self == Color {
     static var success: Color { .success }
     static var warning: Color { .warning }
     static var error:   Color { .error }
+
+    // Archetype Accents
+    static var archetypeGymBro:    Color { .archetypeGymBro }
+    static var archetypeFunctional: Color { .archetypeFunctional }
+    static var archetypePilates:   Color { .archetypePilates }
 
     // Muscle Group
     static var muscleChest:     Color { .muscleChest }
