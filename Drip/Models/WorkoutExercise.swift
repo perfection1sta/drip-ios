@@ -18,6 +18,7 @@ final class WorkoutExercise {
     var exerciseCategoryRaw: String
     var exerciseEquipment: String
     var exerciseRestSeconds: Int
+    var exerciseWorkoutStyleRaw: String
 
     init(sortOrder: Int, exercise: Exercise, customSets: Int? = nil, customReps: Int? = nil) {
         self.id = UUID()
@@ -32,11 +33,15 @@ final class WorkoutExercise {
         self.exerciseCategoryRaw = exercise.categoryRaw
         self.exerciseEquipment = exercise.equipment
         self.exerciseRestSeconds = exercise.restDurationSeconds
+        self.exerciseWorkoutStyleRaw = exercise.workoutStyleRaw
     }
 
     var sets: Int { customSets ?? DifficultyLevel(rawValue: exerciseDifficultyRaw)?.defaultSets ?? 3 }
     var reps: Int { customReps ?? DifficultyLevel(rawValue: exerciseDifficultyRaw)?.defaultReps ?? 10 }
     var primaryMuscles: [MuscleGroup] {
         exercisePrimaryMusclesRaw.compactMap { MuscleGroup(rawValue: $0) }
+    }
+    var workoutStyle: WorkoutStyle {
+        WorkoutStyle(rawValue: exerciseWorkoutStyleRaw) ?? .setsAndReps
     }
 }
