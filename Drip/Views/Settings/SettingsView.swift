@@ -91,7 +91,7 @@ struct SettingsView: View {
                 ShareSheet(items: [url])
             }
         }
-        .confirmationDialog("Delete all workout data?", isPresented: $vm.showDeleteConfirm, titleVisibility: .visible) {
+        .confirmationDialog("Delete all workout data?", isPresented: Binding(get: { vm.showDeleteConfirm }, set: { vm.showDeleteConfirm = $0 }), titleVisibility: .visible) {
             Button("Delete Everything", role: .destructive) {
                 vm.deleteAllData(context: context)
                 HapticManager.shared.error()
