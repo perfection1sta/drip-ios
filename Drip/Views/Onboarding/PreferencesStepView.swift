@@ -78,7 +78,7 @@ struct PreferencesStepView: View {
                             .foregroundStyle(accentColor)
                     }
 
-                    HStack(spacing: Spacing.xs) {
+                    HStack(spacing: Spacing.xxs) {
                         ForEach(1...7, id: \.self) { count in
                             let isSelected = vm.preferredFrequencyDays == count
                             Button {
@@ -88,7 +88,7 @@ struct PreferencesStepView: View {
                                 Text("\(count)")
                                     .font(.titleSmall)
                                     .foregroundStyle(isSelected ? .white : .textSecondary)
-                                    .frame(maxWidth: .infinity)
+                                    .frame(maxWidth: .infinity, minHeight: 48)
                                     .aspectRatio(1, contentMode: .fit)
                                     .background {
                                         Circle()
@@ -111,7 +111,7 @@ struct PreferencesStepView: View {
                         .font(.titleSmall)
                         .foregroundStyle(.textPrimary)
 
-                    HStack(spacing: Spacing.xs) {
+                    HStack(spacing: Spacing.xxs) {
                         ForEach(days, id: \.0) { dayNum, label in
                             let isSelected = vm.preferredWorkoutDays.contains(dayNum)
                             Button {
@@ -125,7 +125,7 @@ struct PreferencesStepView: View {
                                 Text(label)
                                     .font(.labelSmall)
                                     .foregroundStyle(isSelected ? .white : .textSecondary)
-                                    .frame(maxWidth: .infinity)
+                                    .frame(maxWidth: .infinity, minHeight: 48)
                                     .aspectRatio(1, contentMode: .fit)
                                     .background {
                                         Circle()

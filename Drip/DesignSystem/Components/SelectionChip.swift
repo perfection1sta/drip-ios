@@ -32,6 +32,7 @@ struct SelectionChip: View {
                 }
                 Text(label)
                     .font(.labelLarge)
+                    .lineLimit(1)
             }
             .padding(.horizontal, Spacing.sm)
             .padding(.vertical, Spacing.xs)
