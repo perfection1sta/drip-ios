@@ -101,15 +101,12 @@ final class SwiftDataService {
     // MARK: - Delete All Data
 
     func deleteAllData(context: ModelContext) {
-        let models: [any PersistentModel.Type] = [
-            WorkoutSet.self, WorkoutSession.self, WorkoutExercise.self,
-            Workout.self, PersonalRecord.self, AIConversation.self
-        ]
-        for modelType in models {
-            if let objects = try? context.fetch(FetchDescriptor(modelType)) {
-                objects.forEach { context.delete($0) }
-            }
-        }
+        try? context.delete(model: WorkoutSet.self)
+        try? context.delete(model: WorkoutSession.self)
+        try? context.delete(model: WorkoutExercise.self)
+        try? context.delete(model: Workout.self)
+        try? context.delete(model: PersonalRecord.self)
+        try? context.delete(model: AIConversation.self)
         // Reset profile stats but keep the profile itself
         if let profile = (try? context.fetch(FetchDescriptor<UserProfile>()))?.first {
             profile.totalWorkoutsCompleted = 0
@@ -119,9 +116,4 @@ final class SwiftDataService {
         }
         try? context.save()
     }
-}
-
-// Helper for fetching any PersistentModel type
-private func FetchDescriptor<T: PersistentModel>(_ type: T.Type) -> FetchDescriptor<T> {
-    FetchDescriptor<T>()
 }
