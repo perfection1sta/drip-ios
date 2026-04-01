@@ -41,11 +41,15 @@ struct MainTabView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .safeAreaInset(edge: .bottom) {
+                // Reserve space equal to the floating tab bar so no content hides under it
+                Color.clear.frame(height: 88)
+            }
 
             // Active workout mini-banner
             if activeWorkoutVM.sessionState == .active || activeWorkoutVM.sessionState == .resting {
                 ActiveWorkoutBanner()
-                    .padding(.bottom, 88)
+                    .padding(.bottom, 100)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
 
