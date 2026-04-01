@@ -43,12 +43,12 @@ struct OnboardingCompleteView: View {
 
                 VStack(spacing: Spacing.sm) {
                     Text("You're all set, \(vm.name)!")
-                        .font(TypographyTokens.displaySmall)
+                        .font(.displaySmall)
                         .foregroundStyle(.textPrimary)
                         .multilineTextAlignment(.center)
 
                     Text("Your first workout is ready.\nTime to start your streak.")
-                        .font(TypographyTokens.bodyLarge)
+                        .font(.bodyLarge)
                         .foregroundStyle(.textSecondary)
                         .multilineTextAlignment(.center)
                 }
@@ -100,7 +100,7 @@ private struct SummaryChip: View {
             Image(systemName: icon)
                 .font(.system(size: 12))
             Text(label)
-                .font(TypographyTokens.labelSmall)
+                .font(.labelSmall)
         }
         .foregroundStyle(color)
         .padding(.horizontal, Spacing.sm)

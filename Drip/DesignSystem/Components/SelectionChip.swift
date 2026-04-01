@@ -31,7 +31,7 @@ struct SelectionChip: View {
                         .font(.system(size: 13, weight: .medium))
                 }
                 Text(label)
-                    .font(TypographyTokens.labelLarge)
+                    .font(.labelLarge)
             }
             .padding(.horizontal, Spacing.sm)
             .padding(.vertical, Spacing.xs)

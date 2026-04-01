@@ -14,11 +14,11 @@ struct EquipmentSelectionView: View {
 
             VStack(spacing: Spacing.xs) {
                 Text(OnboardingStep.equipment.headline)
-                    .font(TypographyTokens.displaySmall)
+                    .font(.displaySmall)
                     .foregroundStyle(.textPrimary)
                     .multilineTextAlignment(.center)
                 Text("Select everything available to you.")
-                    .font(TypographyTokens.bodyMedium)
+                    .font(.bodyMedium)
                     .foregroundStyle(.textSecondary)
             }
             .opacity(appeared ? 1 : 0)

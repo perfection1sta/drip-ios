@@ -25,10 +25,10 @@ struct AICoachEmptyState: View {
 
                 VStack(spacing: Spacing.xs) {
                     Text("Meet Drip Coach")
-                        .font(TypographyTokens.titleLarge)
+                        .font(.titleLarge)
                         .foregroundStyle(.textPrimary)
                     Text("Your AI-powered fitness coach.\nAsk anything about your training.")
-                        .font(TypographyTokens.bodyMedium)
+                        .font(.bodyMedium)
                         .foregroundStyle(.textSecondary)
                         .multilineTextAlignment(.center)
                 }
@@ -41,7 +41,7 @@ struct AICoachEmptyState: View {
 
             VStack(alignment: .leading, spacing: Spacing.sm) {
                 Text("Try asking...")
-                    .font(TypographyTokens.labelLarge)
+                    .font(.labelLarge)
                     .foregroundStyle(.textSecondary)
                     .padding(.horizontal, Spacing.lg)
 
@@ -54,7 +54,7 @@ struct AICoachEmptyState: View {
                             } label: {
                                 HStack {
                                     Text(prompt)
-                                        .font(TypographyTokens.bodyMedium)
+                                        .font(.bodyMedium)
                                         .foregroundStyle(.textPrimary)
                                         .multilineTextAlignment(.leading)
                                     Spacer()

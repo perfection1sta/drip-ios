@@ -79,7 +79,7 @@ struct AICoachView: View {
 
             HStack(spacing: Spacing.xs) {
                 Text("Drip Coach")
-                    .font(TypographyTokens.titleSmall)
+                    .font(.titleSmall)
                     .foregroundStyle(.textPrimary)
                 BetaBadge()
             }
@@ -118,7 +118,7 @@ struct AICoachView: View {
 
                         if let error = vm.errorMessage {
                             Text(error)
-                                .font(TypographyTokens.bodySmall)
+                                .font(.bodySmall)
                                 .foregroundStyle(.error)
                                 .padding(.horizontal, Spacing.lg)
                                 .multilineTextAlignment(.center)
@@ -152,7 +152,7 @@ struct AICoachView: View {
                 get: { vm.inputText },
                 set: { vm.inputText = $0 }
             ), axis: .vertical)
-            .font(TypographyTokens.bodyMedium)
+            .font(.bodyMedium)
             .foregroundStyle(.textPrimary)
             .lineLimit(1...4)
             .focused($inputFocused)
@@ -202,15 +202,15 @@ struct ConversationListView: View {
                         Button { onSelect(conv) } label: {
                             VStack(alignment: .leading, spacing: Spacing.xxs) {
                                 Text(conv.title)
-                                    .font(TypographyTokens.titleSmall)
+                                    .font(.titleSmall)
                                     .foregroundStyle(.textPrimary)
                                     .lineLimit(1)
                                 Text(conv.preview)
-                                    .font(TypographyTokens.bodySmall)
+                                    .font(.bodySmall)
                                     .foregroundStyle(.textSecondary)
                                     .lineLimit(2)
                                 Text(conv.updatedDate, style: .relative)
-                                    .font(TypographyTokens.caption)
+                                    .font(.caption)
                                     .foregroundStyle(.textTertiary)
                             }
                             .padding(.vertical, Spacing.xxs)

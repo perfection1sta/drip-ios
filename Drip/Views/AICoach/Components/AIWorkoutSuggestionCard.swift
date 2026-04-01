@@ -32,7 +32,7 @@ struct AIWorkoutSuggestionCard: View {
             // Workout details
             VStack(alignment: .leading, spacing: Spacing.xs) {
                 Text(plan.name)
-                    .font(TypographyTokens.titleMedium)
+                    .font(.titleMedium)
                     .foregroundStyle(.textPrimary)
 
                 HStack(spacing: Spacing.md) {
@@ -42,7 +42,7 @@ struct AIWorkoutSuggestionCard: View {
                         Label("\(rounds) rounds", systemImage: "arrow.circlepath")
                     }
                 }
-                .font(TypographyTokens.labelLarge)
+                .font(.labelLarge)
                 .foregroundStyle(.textSecondary)
             }
 
@@ -54,23 +54,23 @@ struct AIWorkoutSuggestionCard: View {
                             .fill(Color.energyOrange.opacity(0.5))
                             .frame(width: 5, height: 5)
                         Text(ex.name)
-                            .font(TypographyTokens.bodySmall)
+                            .font(.bodySmall)
                             .foregroundStyle(.textSecondary)
                         Spacer()
                         if let reps = ex.reps {
                             Text("\(ex.sets)×\(reps)")
-                                .font(TypographyTokens.labelSmall)
+                                .font(.labelSmall)
                                 .foregroundStyle(.textTertiary)
                         } else if let hold = ex.holdSeconds {
                             Text("\(hold)s hold")
-                                .font(TypographyTokens.labelSmall)
+                                .font(.labelSmall)
                                 .foregroundStyle(.textTertiary)
                         }
                     }
                 }
                 if plan.exercises.count > 4 {
                     Text("+\(plan.exercises.count - 4) more")
-                        .font(TypographyTokens.caption)
+                        .font(.caption)
                         .foregroundStyle(.textTertiary)
                 }
             }

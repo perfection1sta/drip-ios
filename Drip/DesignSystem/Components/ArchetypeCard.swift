@@ -26,11 +26,11 @@ struct ArchetypeCard: View {
                 // Text
                 VStack(spacing: Spacing.xxs) {
                     Text(archetype.displayName)
-                        .font(TypographyTokens.titleSmall)
+                        .font(.titleSmall)
                         .foregroundStyle(.textPrimary)
 
                     Text(archetype.tagline)
-                        .font(TypographyTokens.bodySmall)
+                        .font(.bodySmall)
                         .foregroundStyle(.textSecondary)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)

@@ -22,7 +22,7 @@ struct ChatBubbleView: View {
 
             VStack(alignment: isUser ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
-                    .font(TypographyTokens.bodyMedium)
+                    .font(.bodyMedium)
                     .foregroundStyle(isUser ? .white : .textPrimary)
                     .padding(.horizontal, Spacing.md)
                     .padding(.vertical, Spacing.sm)
@@ -41,7 +41,7 @@ struct ChatBubbleView: View {
                     }
 
                 Text(message.timestamp, style: .time)
-                    .font(TypographyTokens.caption)
+                    .font(.caption)
                     .foregroundStyle(.textTertiary)
             }
 

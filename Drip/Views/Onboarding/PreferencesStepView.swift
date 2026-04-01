@@ -18,11 +18,11 @@ struct PreferencesStepView: View {
 
                 VStack(spacing: Spacing.xs) {
                     Text(OnboardingStep.preferences.headline)
-                        .font(TypographyTokens.displaySmall)
+                        .font(.displaySmall)
                         .foregroundStyle(.textPrimary)
                         .multilineTextAlignment(.center)
                     Text("We'll work around your schedule.")
-                        .font(TypographyTokens.bodyMedium)
+                        .font(.bodyMedium)
                         .foregroundStyle(.textSecondary)
                 }
                 .opacity(appeared ? 1 : 0)
@@ -33,7 +33,7 @@ struct PreferencesStepView: View {
                 // Workout duration
                 VStack(alignment: .leading, spacing: Spacing.sm) {
                     Text("Session length")
-                        .font(TypographyTokens.titleSmall)
+                        .font(.titleSmall)
                         .foregroundStyle(.textPrimary)
 
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -45,7 +45,7 @@ struct PreferencesStepView: View {
                                     vm.preferredDurationMinutes = mins
                                 } label: {
                                     Text("\(mins) min")
-                                        .font(TypographyTokens.labelLarge)
+                                        .font(.labelLarge)
                                         .foregroundStyle(isSelected ? accentColor : .textSecondary)
                                         .padding(.horizontal, Spacing.sm)
                                         .padding(.vertical, Spacing.xs)
@@ -70,11 +70,11 @@ struct PreferencesStepView: View {
                 VStack(alignment: .leading, spacing: Spacing.sm) {
                     HStack {
                         Text("Days per week")
-                            .font(TypographyTokens.titleSmall)
+                            .font(.titleSmall)
                             .foregroundStyle(.textPrimary)
                         Spacer()
                         Text("\(vm.preferredFrequencyDays)×")
-                            .font(TypographyTokens.statSmall)
+                            .font(.statSmall)
                             .foregroundStyle(accentColor)
                     }
 
@@ -86,7 +86,7 @@ struct PreferencesStepView: View {
                                 vm.preferredFrequencyDays = count
                             } label: {
                                 Text("\(count)")
-                                    .font(TypographyTokens.titleSmall)
+                                    .font(.titleSmall)
                                     .foregroundStyle(isSelected ? .white : .textSecondary)
                                     .frame(maxWidth: .infinity)
                                     .aspectRatio(1, contentMode: .fit)
@@ -108,7 +108,7 @@ struct PreferencesStepView: View {
                 // Preferred days
                 VStack(alignment: .leading, spacing: Spacing.sm) {
                     Text("Preferred days")
-                        .font(TypographyTokens.titleSmall)
+                        .font(.titleSmall)
                         .foregroundStyle(.textPrimary)
 
                     HStack(spacing: Spacing.xs) {
@@ -123,7 +123,7 @@ struct PreferencesStepView: View {
                                 }
                             } label: {
                                 Text(label)
-                                    .font(TypographyTokens.labelSmall)
+                                    .font(.labelSmall)
                                     .foregroundStyle(isSelected ? .white : .textSecondary)
                                     .frame(maxWidth: .infinity)
                                     .aspectRatio(1, contentMode: .fit)

@@ -32,11 +32,11 @@ struct WelcomeStepView: View {
 
             VStack(spacing: Spacing.sm) {
                 Text("Welcome to Drip")
-                    .font(TypographyTokens.displaySmall)
+                    .font(.displaySmall)
                     .foregroundStyle(.textPrimary)
 
                 Text("Your personal fitness coach.\nLet's get to know you.")
-                    .font(TypographyTokens.bodyLarge)
+                    .font(.bodyLarge)
                     .foregroundStyle(.textSecondary)
                     .multilineTextAlignment(.center)
             }
@@ -49,7 +49,7 @@ struct WelcomeStepView: View {
             // Name input
             VStack(alignment: .leading, spacing: Spacing.xs) {
                 Text("What should we call you?")
-                    .font(TypographyTokens.labelLarge)
+                    .font(.labelLarge)
                     .foregroundStyle(.textSecondary)
                     .padding(.leading, Spacing.xs)
 
@@ -57,7 +57,7 @@ struct WelcomeStepView: View {
                     get: { vm.name },
                     set: { vm.name = $0 }
                 ))
-                .font(TypographyTokens.titleMedium)
+                .font(.titleMedium)
                 .foregroundStyle(.textPrimary)
                 .padding(Spacing.md)
                 .background(Color.surfaceSecondary, in: RoundedRectangle(cornerRadius: Spacing.Radius.lg))

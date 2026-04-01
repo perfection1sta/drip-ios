@@ -43,18 +43,17 @@ struct HoldTimerView: View {
 
                 // Ring + countdown
                 ZStack {
-                    ProgressRing(progress: progress, color: ringColor, lineWidth: 10)
-                        .frame(width: 200, height: 200)
+                    ProgressRingView(progress: progress, ringWidth: 10, size: 200, foreground: ringColor)
                         .animation(reduceMotion ? nil : .smooth, value: progress)
 
                     VStack(spacing: Spacing.xxs) {
                         Text(displayTime)
-                            .font(TypographyTokens.timerDisplay)
+                            .font(.timerDisplay)
                             .foregroundStyle(.textPrimary)
                             .contentTransition(.numericText())
 
                         Text("seconds")
-                            .font(TypographyTokens.labelSmall)
+                            .font(.labelSmall)
                             .foregroundStyle(.textSecondary)
                     }
                 }
@@ -62,7 +61,7 @@ struct HoldTimerView: View {
                 if isComplete {
                     VStack(spacing: Spacing.sm) {
                         Text("Hold Complete! 🎉")
-                            .font(TypographyTokens.titleMedium)
+                            .font(.titleMedium)
                             .foregroundStyle(.success)
 
                         DripButton("Done", style: .primary) {
@@ -83,7 +82,7 @@ struct HoldTimerView: View {
                             stopTimer()
                             onComplete(elapsed)
                         }
-                        .font(TypographyTokens.bodyMedium)
+                        .font(.bodyMedium)
                         .foregroundStyle(.textSecondary)
                     }
                 }

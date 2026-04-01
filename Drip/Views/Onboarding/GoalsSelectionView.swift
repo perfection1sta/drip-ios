@@ -14,11 +14,11 @@ struct GoalsSelectionView: View {
 
             VStack(spacing: Spacing.xs) {
                 Text(OnboardingStep.goals.headline)
-                    .font(TypographyTokens.displaySmall)
+                    .font(.displaySmall)
                     .foregroundStyle(.textPrimary)
                     .multilineTextAlignment(.center)
                 Text("Pick as many as apply.")
-                    .font(TypographyTokens.bodyMedium)
+                    .font(.bodyMedium)
                     .foregroundStyle(.textSecondary)
             }
             .opacity(appeared ? 1 : 0)
@@ -46,7 +46,7 @@ struct GoalsSelectionView: View {
                                     .frame(width: 28)
 
                                 Text(goal.displayName)
-                                    .font(TypographyTokens.titleSmall)
+                                    .font(.titleSmall)
                                     .foregroundStyle(.textPrimary)
 
                                 Spacer()

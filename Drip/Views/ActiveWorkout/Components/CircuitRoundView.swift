@@ -30,7 +30,7 @@ struct CircuitRoundView: View {
 
                 // Round indicator
                 Text(workoutStyle == .amrap ? "AMRAP" : "Round \(currentRound) / \(totalRounds)")
-                    .font(TypographyTokens.labelLarge)
+                    .font(.labelLarge)
                     .foregroundStyle(.textSecondary)
             }
 

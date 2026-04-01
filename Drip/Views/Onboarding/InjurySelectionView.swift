@@ -12,11 +12,11 @@ struct InjurySelectionView: View {
 
                 VStack(spacing: Spacing.xs) {
                     Text(OnboardingStep.injuries.headline)
-                        .font(TypographyTokens.displaySmall)
+                        .font(.displaySmall)
                         .foregroundStyle(.textPrimary)
                         .multilineTextAlignment(.center)
                     Text("Optional — your AI Coach uses this to keep workouts safe.")
-                        .font(TypographyTokens.bodyMedium)
+                        .font(.bodyMedium)
                         .foregroundStyle(.textSecondary)
                         .multilineTextAlignment(.center)
                 }
@@ -42,7 +42,7 @@ struct InjurySelectionView: View {
                                     .font(.system(size: 14))
                                     .foregroundStyle(isSelected ? .error : .textSecondary)
                                 Text(area.displayName)
-                                    .font(TypographyTokens.labelLarge)
+                                    .font(.labelLarge)
                                     .foregroundStyle(.textPrimary)
                                 Spacer()
                             }
@@ -67,14 +67,14 @@ struct InjurySelectionView: View {
                 if !vm.selectedInjuries.isEmpty {
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("Any details? (e.g. diagnosed condition, cleared by PT)")
-                            .font(TypographyTokens.labelLarge)
+                            .font(.labelLarge)
                             .foregroundStyle(.textSecondary)
 
                         TextField("Optional notes...", text: Binding(
                             get: { vm.injuryNotes },
                             set: { vm.injuryNotes = $0 }
                         ), axis: .vertical)
-                        .font(TypographyTokens.bodyMedium)
+                        .font(.bodyMedium)
                         .foregroundStyle(.textPrimary)
                         .lineLimit(3...5)
                         .padding(Spacing.sm)
@@ -99,7 +99,7 @@ struct InjurySelectionView: View {
                         vm.selectedInjuries.removeAll()
                         vm.advance()
                     }
-                    .font(TypographyTokens.bodyMedium)
+                    .font(.bodyMedium)
                     .foregroundStyle(.textSecondary)
                 }
                 .opacity(appeared ? 1 : 0)

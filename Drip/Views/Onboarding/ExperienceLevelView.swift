@@ -20,7 +20,7 @@ struct ExperienceLevelView: View {
 
             VStack(spacing: Spacing.xs) {
                 Text(OnboardingStep.experience.headline)
-                    .font(TypographyTokens.displaySmall)
+                    .font(.displaySmall)
                     .foregroundStyle(.textPrimary)
                     .multilineTextAlignment(.center)
             }
@@ -53,10 +53,10 @@ struct ExperienceLevelView: View {
 
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(title)
-                                    .font(TypographyTokens.titleSmall)
+                                    .font(.titleSmall)
                                     .foregroundStyle(.textPrimary)
                                 Text(subtitle)
-                                    .font(TypographyTokens.bodySmall)
+                                    .font(.bodySmall)
                                     .foregroundStyle(.textSecondary)
                             }
                             Spacer()

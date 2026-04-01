@@ -10,12 +10,12 @@ struct ArchetypeSelectionView: View {
 
             VStack(spacing: Spacing.xs) {
                 Text(OnboardingStep.archetype.headline)
-                    .font(TypographyTokens.displaySmall)
+                    .font(.displaySmall)
                     .foregroundStyle(.textPrimary)
                     .multilineTextAlignment(.center)
 
                 Text("Choose the style that matches how you like to move.")
-                    .font(TypographyTokens.bodyMedium)
+                    .font(.bodyMedium)
                     .foregroundStyle(.textSecondary)
                     .multilineTextAlignment(.center)
             }

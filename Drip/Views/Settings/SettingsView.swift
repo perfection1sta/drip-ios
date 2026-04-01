@@ -150,15 +150,15 @@ struct SettingsView: View {
                         Spacer()
                         Text("Saved ✓")
                             .foregroundStyle(.success)
-                            .font(TypographyTokens.labelLarge)
+                            .font(.labelLarge)
                         Button("Remove") { vm.removeAPIKey() }
                             .foregroundStyle(.error)
-                            .font(TypographyTokens.labelLarge)
+                            .font(.labelLarge)
                     }
                 } else {
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("Enter your Claude API key")
-                            .font(TypographyTokens.labelLarge)
+                            .font(.labelLarge)
                             .foregroundStyle(.textSecondary)
 
                         HStack {
@@ -166,14 +166,14 @@ struct SettingsView: View {
                                 get: { vm.apiKeyInput },
                                 set: { vm.apiKeyInput = $0 }
                             ))
-                            .font(TypographyTokens.bodySmall)
+                            .font(.bodySmall)
                             .foregroundStyle(.textPrimary)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
 
                             Button("Save") { vm.saveAPIKey() }
                                 .foregroundStyle(.energyOrange)
-                                .font(TypographyTokens.labelLarge)
+                                .font(.labelLarge)
                                 .disabled(vm.apiKeyInput.isEmpty)
                         }
                     }
@@ -191,7 +191,7 @@ struct SettingsView: View {
                 ScrollView {
                     VStack(spacing: Spacing.md) {
                         Text("Changing your archetype resets your exercise library.")
-                            .font(TypographyTokens.bodySmall)
+                            .font(.bodySmall)
                             .foregroundStyle(.textSecondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
