@@ -9,43 +9,25 @@ struct ActiveWorkoutView: View {
 
     var body: some View {
         ZStack {
-            // Animated background
             AnimatedGradientBackground(category: vm.currentExercise?.exerciseCategoryRaw)
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Progress bar (top)
-                WorkoutProgressBar(progress: vm.completionPercentage)
+                workoutHeader
+                    .padding(.horizontal, Spacing.lg)
                     .padding(.top, Spacing.md)
 
-                // Header
-                workoutHeader
-                    .padding(.horizontal, Spacing.md)
-                    .padding(.top, Spacing.sm)
-
                 Spacer()
 
-                // Current exercise hero
                 if let exercise = vm.currentExercise {
-                    ExerciseHeroView(workoutExercise: exercise,
-                                     exerciseIndex: vm.currentExerciseIndex,
-                                     totalExercises: vm.workout?.sortedExercises.count ?? 0)
-                        .padding(.horizontal, Spacing.md)
+                    exerciseSection(exercise)
                 }
 
                 Spacer()
 
-                // Set tracker
-                if let exercise = vm.currentExercise {
-                    SetTrackerView(workoutExercise: exercise,
-                                   currentSet: vm.currentSetIndex)
-                        .padding(.horizontal, Spacing.md)
-                }
-
-                // Input + complete button
-                setInputSection
-                    .padding(.horizontal, Spacing.md)
-                    .padding(.bottom, Spacing.huge)
+                bottomControls
+                    .padding(.horizontal, Spacing.lg)
+                    .padding(.bottom, Spacing.xxl)
             }
 
             // Rest timer overlay
@@ -54,14 +36,12 @@ struct ActiveWorkoutView: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
 
-            // Set completion burst
             if vm.showSetCompletion {
                 SetCompletionOverlay(info: vm.lastCompletedSetInfo)
                     .transition(.scale(scale: 0.6).combined(with: .opacity))
                     .allowsHitTesting(false)
             }
 
-            // PR celebration
             if vm.showPRCelebration {
                 PRCelebrationBanner(exerciseName: vm.newPRExerciseName ?? "")
                     .transition(.move(edge: .top).combined(with: .opacity))
@@ -77,36 +57,38 @@ struct ActiveWorkoutView: View {
                             isPresented: $showExitConfirm,
                             titleVisibility: .visible) {
             Button("Finish & Save", role: .none) { vm.finishWorkout() }
-            Button("Abandon", role: .destructive) {
-                vm.abandonWorkout()
-                dismiss()
-            }
+            Button("Abandon", role: .destructive) { vm.abandonWorkout(); dismiss() }
             Button("Continue", role: .cancel) {}
         } message: {
             Text("You've completed \(Int(vm.completionPercentage * 100))% of the workout.")
         }
     }
 
+    // MARK: Header — minimal: X | workout name + timer | pause
     private var workoutHeader: some View {
         HStack {
             Button {
                 HapticManager.shared.light()
                 showExitConfirm = true
             } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 26))
-                    .foregroundStyle(.white.opacity(0.7))
+                Image(systemName: "xmark")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.6))
+                    .frame(width: 36, height: 36)
+                    .background(.white.opacity(0.1))
+                    .clipShape(Circle())
             }
 
             Spacer()
 
             VStack(spacing: 2) {
                 Text(vm.workout?.name ?? "Workout")
-                    .font(.titleSmall)
-                    .foregroundStyle(.white)
+                    .font(.labelLarge)
+                    .foregroundStyle(.white.opacity(0.9))
+                    .lineLimit(1)
                 Text(vm.timerVM.displayTime)
-                    .font(.bodySmall)
-                    .foregroundStyle(.white.opacity(0.7))
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
                     .monospacedDigit()
             }
 
@@ -116,88 +98,161 @@ struct ActiveWorkoutView: View {
                 vm.sessionState == .paused ? vm.resumeWorkout() : vm.pauseWorkout()
                 HapticManager.shared.light()
             } label: {
-                Image(systemName: vm.sessionState == .paused ? "play.circle.fill" : "pause.circle.fill")
-                    .font(.system(size: 26))
-                    .foregroundStyle(.white.opacity(0.7))
+                Image(systemName: vm.sessionState == .paused ? "play.fill" : "pause.fill")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.6))
+                    .frame(width: 36, height: 36)
+                    .background(.white.opacity(0.1))
+                    .clipShape(Circle())
             }
         }
     }
 
-    @State private var inputReps: Int = 0
-    @State private var inputWeight: Double = 0
+    // MARK: Exercise section — icon, name, set pill
+    @ViewBuilder
+    private func exerciseSection(_ exercise: WorkoutExercise) -> some View {
+        let total = vm.workout?.sortedExercises.count ?? 1
 
-    private var setInputSection: some View {
-        VStack(spacing: Spacing.md) {
-            HStack(spacing: Spacing.xl) {
-                // Reps stepper
-                VStack(spacing: 4) {
-                    Text("Reps")
-                        .font(.labelSmall)
-                        .foregroundStyle(.white.opacity(0.7))
-                    HStack(spacing: Spacing.md) {
-                        stepperButton(icon: "minus", action: {
-                            if vm.inputReps > 0 { vm.inputReps -= 1 }
-                        })
-                        Text("\(vm.inputReps)")
-                            .font(.statSmall)
+        VStack(spacing: Spacing.xl) {
+            // Icon glow
+            ZStack {
+                Circle()
+                    .fill(RadialGradient.glowEffect(color: muscleColor(exercise), radius: 100))
+                    .frame(width: 180, height: 180)
+                Image(systemName: exercise.exerciseIconName)
+                    .font(.system(size: 72, weight: .ultraLight))
+                    .foregroundStyle(muscleColor(exercise))
+                    .symbolRenderingMode(.hierarchical)
+            }
+
+            VStack(spacing: Spacing.sm) {
+                // Exercise counter (subtle)
+                Text("\(vm.currentExerciseIndex + 1) of \(total)")
+                    .font(.labelSmall)
+                    .foregroundStyle(.white.opacity(0.4))
+
+                // Name
+                Text(exercise.exerciseName)
+                    .font(.displaySmall)
+                    .fontWeight(.bold)
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .minimumScaleFactor(0.75)
+                    .lineLimit(2)
+                    .padding(.horizontal, Spacing.lg)
+
+                // Set progress dots
+                setProgressDots(exercise: exercise)
+            }
+        }
+        .id(exercise.id)
+        .transition(.asymmetric(
+            insertion: .move(edge: .trailing).combined(with: .opacity),
+            removal: .move(edge: .leading).combined(with: .opacity)
+        ))
+    }
+
+    // MARK: Set progress — minimal dot row
+    private func setProgressDots(exercise: WorkoutExercise) -> some View {
+        HStack(spacing: Spacing.xs) {
+            ForEach(0..<exercise.sets, id: \.self) { i in
+                let isDone = i < vm.currentSetIndex
+                let isCurrent = i == vm.currentSetIndex
+                ZStack {
+                    Capsule()
+                        .fill(isDone ? muscleColor(exercise) : (isCurrent ? .white.opacity(0.4) : .white.opacity(0.12)))
+                        .frame(width: isCurrent ? 28 : 8, height: 8)
+                    if isCurrent {
+                        Text("Set \(i + 1)")
+                            .font(.system(size: 9, weight: .semibold))
                             .foregroundStyle(.white)
-                            .monospacedDigit()
-                            .frame(minWidth: 44)
-                        stepperButton(icon: "plus", action: { vm.inputReps += 1 })
                     }
                 }
+                .animation(.snappy, value: vm.currentSetIndex)
+            }
+        }
+    }
+
+    // MARK: Bottom controls — reps/weight + complete
+    private var bottomControls: some View {
+        VStack(spacing: Spacing.md) {
+            // Reps + Weight
+            HStack(spacing: 0) {
+                inputControl(label: "Reps",
+                             value: "\(vm.inputReps)",
+                             onMinus: { if vm.inputReps > 0 { vm.inputReps -= 1 } },
+                             onPlus: { vm.inputReps += 1 })
 
                 Rectangle()
-                    .fill(.white.opacity(0.15))
-                    .frame(width: 1, height: 48)
+                    .fill(.white.opacity(0.1))
+                    .frame(width: 1, height: 56)
 
-                // Weight stepper
-                VStack(spacing: 4) {
-                    Text("Weight (lbs)")
-                        .font(.labelSmall)
-                        .foregroundStyle(.white.opacity(0.7))
-                    HStack(spacing: Spacing.md) {
-                        stepperButton(icon: "minus", action: {
-                            if vm.inputWeight >= 5 { vm.inputWeight -= 5 }
-                        })
-                        Text(vm.inputWeight == 0 ? "BW" : "\(Int(vm.inputWeight))")
-                            .font(.statSmall)
-                            .foregroundStyle(.white)
-                            .monospacedDigit()
-                            .frame(minWidth: 44)
-                        stepperButton(icon: "plus", action: { vm.inputWeight += 5 })
-                    }
-                }
+                inputControl(label: "Weight (lbs)",
+                             value: vm.inputWeight == 0 ? "BW" : "\(Int(vm.inputWeight))",
+                             onMinus: { if vm.inputWeight >= 5 { vm.inputWeight -= 5 } },
+                             onPlus: { vm.inputWeight += 5 })
             }
-            .padding(Spacing.md)
-            .background(Color.white.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: Spacing.Radius.lg))
+            .background(.white.opacity(0.07))
+            .clipShape(RoundedRectangle(cornerRadius: Spacing.Radius.xl))
 
-            DripButton("Complete Set",
-                       icon: "checkmark") {
+            // Complete Set
+            DripButton("Complete Set", icon: "checkmark") {
                 vm.completeSet()
             }
 
-            DripButton("Skip Set", style: .ghost) {
+            // Skip — text link only, no button outline
+            Button("Skip Set") {
                 vm.skipSet()
                 HapticManager.shared.light()
             }
+            .font(.bodySmall)
+            .foregroundStyle(.white.opacity(0.4))
         }
     }
 
-    private func stepperButton(icon: String, action: @escaping () -> Void) -> some View {
-        Button(action: {
-            HapticManager.shared.light()
-            action()
-        }) {
-            Image(systemName: icon)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(.white)
-                .frame(width: 36, height: 36)
-                .background(Color.white.opacity(0.15))
-                .clipShape(Circle())
+    // MARK: Input control (reps or weight)
+    private func inputControl(label: String, value: String,
+                              onMinus: @escaping () -> Void,
+                              onPlus: @escaping () -> Void) -> some View {
+        HStack(spacing: Spacing.sm) {
+            Button(action: { HapticManager.shared.light(); onMinus() }) {
+                Image(systemName: "minus")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.7))
+                    .frame(width: 36, height: 36)
+                    .background(.white.opacity(0.1))
+                    .clipShape(Circle())
+            }
+            .buttonStyle(.plain)
+
+            VStack(spacing: 2) {
+                Text(value)
+                    .font(.statSmall)
+                    .foregroundStyle(.white)
+                    .monospacedDigit()
+                    .frame(minWidth: 40)
+                    .contentTransition(.numericText())
+                Text(label)
+                    .font(.system(size: 10))
+                    .foregroundStyle(.white.opacity(0.4))
+            }
+
+            Button(action: { HapticManager.shared.light(); onPlus() }) {
+                Image(systemName: "plus")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.white.opacity(0.7))
+                    .frame(width: 36, height: 36)
+                    .background(.white.opacity(0.1))
+                    .clipShape(Circle())
+            }
+            .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, Spacing.md)
+    }
+
+    private func muscleColor(_ exercise: WorkoutExercise) -> Color {
+        exercise.primaryMuscles.first?.color ?? .energyOrange
     }
 }
 
