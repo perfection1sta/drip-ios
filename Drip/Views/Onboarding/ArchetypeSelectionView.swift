@@ -41,9 +41,10 @@ struct ArchetypeSelectionView: View {
 
             Spacer()
 
-            DripButton("Continue", style: .primary, isDisabled: !vm.canAdvance) {
+            DripButton("Continue", style: .primary) {
                 vm.advance()
             }
+            .disabled(!vm.canAdvance)
             .opacity(appeared ? 1 : 0)
             .animation(.smooth.delay(0.4), value: appeared)
 

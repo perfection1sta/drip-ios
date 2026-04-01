@@ -75,9 +75,10 @@ struct WelcomeStepView: View {
 
             Spacer().frame(height: Spacing.xxl)
 
-            DripButton("Let's Go", style: .primary, isDisabled: !vm.canAdvance) {
+            DripButton("Let's Go", style: .primary) {
                 vm.advance()
             }
+            .disabled(!vm.canAdvance)
             .opacity(appeared ? 1 : 0)
             .animation(.smooth.delay(0.4), value: appeared)
 

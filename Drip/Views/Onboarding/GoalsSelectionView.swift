@@ -77,9 +77,10 @@ struct GoalsSelectionView: View {
                 .padding(.bottom, Spacing.xl)
             }
 
-            DripButton("Continue", style: .primary, isDisabled: !vm.canAdvance) {
+            DripButton("Continue", style: .primary) {
                 vm.advance()
             }
+            .disabled(!vm.canAdvance)
 
             Spacer().frame(height: Spacing.xl)
         }

@@ -143,9 +143,10 @@ struct PreferencesStepView: View {
 
                 Spacer().frame(height: Spacing.xxl)
 
-                DripButton("Let's Build Your Plan", style: .primary, isDisabled: !vm.canAdvance) {
+                DripButton("Let's Build Your Plan", style: .primary) {
                     vm.advance()
                 }
+            .disabled(!vm.canAdvance)
                 .opacity(appeared ? 1 : 0)
                 .animation(.smooth.delay(0.35), value: appeared)
 

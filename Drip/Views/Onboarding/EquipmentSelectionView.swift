@@ -49,9 +49,10 @@ struct EquipmentSelectionView: View {
             .opacity(appeared ? 1 : 0)
             .animation(.smooth.delay(0.15), value: appeared)
 
-            DripButton("Continue", style: .primary, isDisabled: !vm.canAdvance) {
+            DripButton("Continue", style: .primary) {
                 vm.advance()
             }
+            .disabled(!vm.canAdvance)
 
             Spacer().frame(height: Spacing.xl)
         }
