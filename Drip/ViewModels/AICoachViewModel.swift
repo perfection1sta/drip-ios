@@ -22,6 +22,8 @@ final class AICoachViewModel {
         "Help me with a recovery day routine"
     ]
 
+    var hasAPIKey: Bool = false
+
     private var service: AICoachServiceProtocol = DirectAPIAICoachService()
     private var modelContext: ModelContext?
 
@@ -29,7 +31,12 @@ final class AICoachViewModel {
 
     func setup(context: ModelContext) {
         self.modelContext = context
+        hasAPIKey = KeychainService.hasAPIKey
         loadConversations(context: context)
+    }
+
+    func refreshAPIKeyState() {
+        hasAPIKey = KeychainService.hasAPIKey
     }
 
     // MARK: - Conversations

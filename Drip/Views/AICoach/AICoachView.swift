@@ -5,6 +5,7 @@ struct AICoachView: View {
     @Environment(\.modelContext) private var context
     @Environment(AICoachViewModel.self) private var vm
     @Environment(ActiveWorkoutViewModel.self) private var workoutVM
+    @Environment(\.scenePhase) private var scenePhase
 
     @FocusState private var inputFocused: Bool
     @State private var showConversationList = false
@@ -18,7 +19,9 @@ struct AICoachView: View {
                 navBar
 
                 // Content
-                if let conversation = vm.currentConversation {
+                if !vm.hasAPIKey {
+                    noAPIKeyState
+                } else if let conversation = vm.currentConversation {
                     chatView(conversation: conversation)
                 } else {
                     AICoachEmptyState(starterPrompts: vm.starterPrompts) { prompt in
@@ -43,6 +46,9 @@ struct AICoachView: View {
             }
         }
         .onAppear { vm.setup(context: context) }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { vm.refreshAPIKeyState() }
+        }
         .sheet(isPresented: $showConversationList) {
             ConversationListView(
                 conversations: vm.conversations,
@@ -61,6 +67,27 @@ struct AICoachView: View {
             ActiveWorkoutViewWrapper(workout: workout)
         }
         .animation(.smooth, value: vm.suggestedWorkout != nil)
+    }
+
+    // MARK: No API Key State
+    private var noAPIKeyState: some View {
+        VStack(spacing: Spacing.xl) {
+            Spacer()
+            Image(systemName: "key.slash")
+                .font(.system(size: 48, weight: .light))
+                .foregroundStyle(.textTertiary)
+            VStack(spacing: Spacing.xs) {
+                Text("API Key Required")
+                    .font(.titleMedium)
+                    .foregroundStyle(.textPrimary)
+                Text("Add your Claude API key in Settings → AI Coach to start chatting.")
+                    .font(.bodyMedium)
+                    .foregroundStyle(.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, Spacing.xl)
+            }
+            Spacer()
+        }
     }
 
     // MARK: Nav Bar
