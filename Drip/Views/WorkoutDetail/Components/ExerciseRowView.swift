@@ -14,40 +14,29 @@ struct ExerciseRowView: View {
                     HapticManager.shared.light()
                     withAnimation(.snappy) { isExpanded.toggle() }
                 } label: {
-                    HStack(spacing: Spacing.md) {
+                    HStack(spacing: Spacing.sm) {
                         // Index circle
                         ZStack {
                             Circle()
                                 .fill(LinearGradient.energyGradient)
-                                .frame(width: 36, height: 36)
+                                .frame(width: 34, height: 34)
                             Text("\(index)")
                                 .font(.labelLarge)
                                 .foregroundStyle(.white)
                         }
 
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: 3) {
                             Text(workoutExercise.exerciseName)
                                 .font(.titleSmall)
                                 .foregroundStyle(.textPrimary)
-                                .lineLimit(1)
-                            HStack(spacing: Spacing.xs) {
-                                Text("\(workoutExercise.sets) sets × \(workoutExercise.reps) reps")
-                                    .font(.bodySmall)
-                                    .foregroundStyle(.textSecondary)
-                                Text("·")
-                                    .foregroundStyle(.textTertiary)
-                                Text(workoutExercise.exerciseEquipment)
-                                    .font(.bodySmall)
-                                    .foregroundStyle(.textTertiary)
-                            }
+                                .lineLimit(2)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Text("\(workoutExercise.sets) sets × \(workoutExercise.reps) reps")
+                                .font(.bodySmall)
+                                .foregroundStyle(.textSecondary)
                         }
 
-                        Spacer()
-
-                        // Muscle chips
-                        if let muscle = workoutExercise.primaryMuscles.first {
-                            DripBadge(text: muscle.displayName, color: muscle.color)
-                        }
+                        Spacer(minLength: Spacing.xs)
 
                         Image(systemName: "chevron.down")
                             .font(.system(size: 12, weight: .semibold))
@@ -60,11 +49,62 @@ struct ExerciseRowView: View {
 
                 // Expanded detail
                 if isExpanded {
-                    MuscleGroupChip(muscles: workoutExercise.primaryMuscles)
-                        .padding(.top, Spacing.md)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                    VStack(alignment: .leading, spacing: Spacing.sm) {
+                        Divider()
+                            .background(Color.surfaceTertiary)
+                            .padding(.top, Spacing.sm)
+
+                        // Muscles
+                        if !workoutExercise.primaryMuscles.isEmpty {
+                            detailRow(icon: "figure.strengthtraining.traditional", label: "Muscles") {
+                                HStack(spacing: Spacing.xxs) {
+                                    ForEach(workoutExercise.primaryMuscles) { muscle in
+                                        DripBadge(text: muscle.displayName, color: muscle.color)
+                                    }
+                                }
+                            }
+                        }
+
+                        // Equipment
+                        detailRow(icon: "wrench.and.screwdriver", label: "Equipment") {
+                            Text(workoutExercise.exerciseEquipment)
+                                .font(.bodySmall)
+                                .foregroundStyle(.textSecondary)
+                        }
+
+                        // Rest time
+                        detailRow(icon: "timer", label: "Rest") {
+                            Text("\(workoutExercise.exerciseRestSeconds)s between sets")
+                                .font(.bodySmall)
+                                .foregroundStyle(.textSecondary)
+                        }
+
+                        // Style badge
+                        detailRow(icon: "bolt.fill", label: "Style") {
+                            Text(workoutExercise.workoutStyle.shortDescription)
+                                .font(.bodySmall)
+                                .foregroundStyle(.textSecondary)
+                        }
+                    }
+                    .transition(.move(edge: .top).combined(with: .opacity))
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func detailRow<Content: View>(icon: String, label: String, @ViewBuilder content: () -> Content) -> some View {
+        HStack(alignment: .top, spacing: Spacing.sm) {
+            Image(systemName: icon)
+                .font(.system(size: 12))
+                .foregroundStyle(.textTertiary)
+                .frame(width: 16)
+            Text(label)
+                .font(.labelSmall)
+                .foregroundStyle(.textTertiary)
+                .frame(width: 64, alignment: .leading)
+            content()
+            Spacer()
         }
     }
 }

@@ -26,10 +26,12 @@ struct ExerciseHeroView: View {
                     .foregroundStyle(.white.opacity(0.5))
 
                 Text(workoutExercise.exerciseName)
-                    .font(.displaySmall)
+                    .font(.titleLarge)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 // Muscle chips
                 ScrollView(.horizontal, showsIndicators: false) {
