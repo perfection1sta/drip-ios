@@ -85,15 +85,15 @@ struct PreferencesStepView: View {
                                 HapticManager.shared.selection()
                                 vm.preferredFrequencyDays = count
                             } label: {
-                                Text("\(count)")
-                                    .font(.titleSmall)
-                                    .foregroundStyle(isSelected ? .white : .textSecondary)
-                                    .frame(maxWidth: .infinity, minHeight: 48)
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .background {
-                                        Circle()
-                                            .fill(isSelected ? accentColor : Color.surfaceSecondary)
-                                    }
+                                ZStack {
+                                    Circle()
+                                        .fill(isSelected ? accentColor : Color.surfaceSecondary)
+                                    Text("\(count)")
+                                        .font(.titleSmall)
+                                        .foregroundStyle(isSelected ? .white : .textSecondary)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .aspectRatio(1, contentMode: .fit)
                             }
                             .buttonStyle(.plain)
                             .animation(.snappy, value: isSelected)
@@ -122,16 +122,16 @@ struct PreferencesStepView: View {
                                     vm.preferredWorkoutDays.insert(dayNum)
                                 }
                             } label: {
-                                Text(label)
-                                    .font(.labelSmall)
-                                    .foregroundStyle(isSelected ? .white : .textSecondary)
-                                    .frame(maxWidth: .infinity, minHeight: 48)
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .background {
-                                        Circle()
-                                            .fill(isSelected ? accentColor : Color.surfaceSecondary)
-                                            .overlay { Circle().stroke(Color.surfaceTertiary, lineWidth: isSelected ? 0 : 1) }
-                                    }
+                                ZStack {
+                                    Circle()
+                                        .fill(isSelected ? accentColor : Color.surfaceSecondary)
+                                        .overlay { Circle().stroke(Color.surfaceTertiary, lineWidth: isSelected ? 0 : 1) }
+                                    Text(label)
+                                        .font(.labelSmall)
+                                        .foregroundStyle(isSelected ? .white : .textSecondary)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .aspectRatio(1, contentMode: .fit)
                             }
                             .buttonStyle(.plain)
                             .animation(.snappy, value: isSelected)

@@ -21,7 +21,14 @@ struct ChatBubbleView: View {
             }
 
             VStack(alignment: isUser ? .trailing : .leading, spacing: 4) {
-                Text(message.content)
+                Group {
+                    if let attributed = try? AttributedString(markdown: message.content,
+                        options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
+                        Text(attributed)
+                    } else {
+                        Text(message.content)
+                    }
+                }
                     .font(.bodyMedium)
                     .foregroundStyle(isUser ? .white : .textPrimary)
                     .padding(.horizontal, Spacing.md)

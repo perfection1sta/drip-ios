@@ -32,13 +32,12 @@ struct ExerciseLibraryView: View {
                             GridItem(.flexible(), spacing: Spacing.sm)
                         ], spacing: Spacing.sm) {
                             ForEach(Array(vm.filteredExercises.enumerated()), id: \.element.id) { idx, ex in
-                                ExerciseGridCard(exercise: ex)
-                                    .onTapGesture {
-                                        HapticManager.shared.light()
-                                        selectedExercise = ex
-                                    }
-                                    .transition(.scale(scale: 0.9).combined(with: .opacity))
-                                    .animation(.staggered(idx % 20), value: vm.filteredExercises.count)
+                                ExerciseGridCard(exercise: ex, onTap: {
+                                    HapticManager.shared.light()
+                                    selectedExercise = ex
+                                })
+                                .transition(.scale(scale: 0.9).combined(with: .opacity))
+                                .animation(.staggered(idx % 20), value: vm.filteredExercises.count)
                             }
                         }
                         .padding(Spacing.md)
