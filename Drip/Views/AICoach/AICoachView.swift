@@ -57,7 +57,7 @@ struct AICoachView: View {
                 }
             )
         }
-        .fullScreenCover(item: $vm.adoptedWorkout) { workout in
+        .fullScreenCover(item: Binding(get: { vm.adoptedWorkout }, set: { vm.adoptedWorkout = $0 })) { (workout: Workout) in
             ActiveWorkoutViewWrapper(workout: workout)
         }
         .animation(.smooth, value: vm.suggestedWorkout != nil)
